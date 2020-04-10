@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head></head>
+
+<body>
+    <div id="board"></div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var board = document.getElementById('board');
+        for (var i = 1; i <= 8; i++) {
+            var row = document.createElement('div');
+            row.classList.add('row');
+            for (var j = 1; j <= 8; j++) {
+                let box = document.createElement('div');
+                box.classList.add(i + '' + j);
+                box.classList.add('box');
+                box.setAttribute('onclick', 'clickedbox(this)');
+                row.appendChild(box);
+            }
+            board.appendChild(row.cloneNode(true));
+        }
+    }
+
+    function clickedbox(e) {
+        let boxes = document.querySelectorAll('.box');
+        for (let count = 0; count < boxes.length; count++) {
+            boxes[count].classList.remove('bg-red')
+        }
+
+        em = e.classList[0];
+        const axis1 = parseInt(em.split('')[0]);
+        const axis2 = parseInt(em.split('')[1]);
+
+        let i = axis1;
+        let j = axis2;
+        while (i <= 8 && j <= 8) {
+            document.getElementsByClassName((i++) + '' + (j++))[0].classList.add('bg-red');
+        }
+
+        i = axis1;
+        j = axis2;
+        while (i >= 1 && j >= 1) {
+            document.getElementsByClassName((i--) + '' + (j--))[0].classList.add('bg-red');
+        }
+
+        i = axis1;
+        j = axis2;
+        while (i >= 1 && j <= 8) {
+            document.getElementsByClassName((i--) + '' + (j++))[0].classList.add('bg-red');
+        }
+
+        i = axis1;
+        j = axis2;
+        while (i <= 8 && j >= 1) {
+            document.getElementsByClassName((i++) + '' + (j--))[0].classList.add('bg-red');
+        }
+    }
+</script>
+
+<style type="text/css">
+    #board {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .box {
+        width: 12.5%;
+        height: 12.5vh;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    #board>div:nth-child(odd)>div:nth-child(odd) {
+        background-color: black;
+    }
+
+    #board>div:nth-child(even)>div:nth-child(even) {
+        background-color: black;
+    }
+
+    .bg-red {
+        background-color: red !important;
+    }
+</style>
